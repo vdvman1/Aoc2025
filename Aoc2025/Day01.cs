@@ -7,10 +7,12 @@ public partial class Day01 : DayBase
     /* 
      * Measured performance:
      * 
-     * 
+     * | Method | Mean     | Error    | StdDev   |
+     * |------- |---------:|---------:|---------:|
+     * | Solve1 | 43.30 us | 0.119 us | 0.174 us |
+     * | Solve2 | 47.75 us | 0.107 us | 0.160 us |
      */
 
-    [Benchmark]
     public override void ParseData()
     {
         // No common parsing logic
