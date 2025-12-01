@@ -65,4 +65,6 @@ public static class MathPlus
     }
 
     public static long SumRange(long start, long count) => count * (2 * start + count - 1) / 2;
+
+    public static int FloorMod(this int value, int modulus) => (value % modulus + modulus) % modulus;
 }
