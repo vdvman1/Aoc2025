@@ -47,6 +47,26 @@ public static class MathPlus
         return digits;
     }
 
+    public static IEnumerable<(int, int)> Factors(this int value)
+    {
+        if (value == 1)
+        {
+            yield return (1, 1);
+            yield break;
+        }
+
+        var end = (int)Math.Ceiling(Math.Sqrt(value));
+
+        for (var factor = 1; factor <= end && factor < value; factor++)
+        {
+            var (quotient, remainder) = Math.DivRem(value, factor);
+            if (remainder == 0)
+            {
+                yield return (factor, quotient);
+            }
+        }
+    }
+
     public static long Pow(this long value, int exponent)
     {
         long res = 1;
