@@ -4,11 +4,21 @@ namespace Aoc2025;
 
 public partial class Day02 : DayBase
 {
+    /*
+     * Measured performance:
+     * 
+     * | Method | Mean       | Error     | StdDev    |
+     * |------- |-----------:|----------:|----------:|
+     * | Solve1 |   6.871 ms | 0.0407 ms | 0.0597 ms |
+     * | Solve2 | 493.317 ms | 0.8447 ms | 1.2114 ms |
+     */
+
     public override void ParseData()
     {
         // No common parsing logic
     }
 
+    [Benchmark]
     public override string Solve1()
     {
         var parser = new Parser(Contents);
@@ -63,6 +73,7 @@ public partial class Day02 : DayBase
     [GeneratedRegex("""^(.*)\1+$""")]
     private static partial Regex RepeatedPatternRegex();
 
+    [Benchmark]
     public override string Solve2()
     {
         var parser = new Parser(Contents);
