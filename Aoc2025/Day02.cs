@@ -1,4 +1,6 @@
-﻿namespace Aoc2025;
+﻿using System.Text.RegularExpressions;
+
+namespace Aoc2025;
 
 public partial class Day02 : DayBase
 {
@@ -58,8 +60,31 @@ public partial class Day02 : DayBase
         return total.ToString();
     }
 
+    [GeneratedRegex("""^(.*)\1+$""")]
+    private static partial Regex RepeatedPatternRegex();
+
     public override string Solve2()
     {
-        throw new NotImplementedException();
+        var parser = new Parser(Contents);
+        var repeatedPatternRegex = RepeatedPatternRegex();
+
+        long total = 0;
+        do
+        {
+            var value = parser.ParsePosLong(); // range start
+            parser.MoveNext(); // skip '-'
+            var rangeEnd = parser.ParsePosLong();
+            parser.MoveNext(); // skip ','
+
+            for (; value <= rangeEnd; value++)
+            {
+                if (repeatedPatternRegex.IsMatch(value.ToString()))
+                {
+                    total += value;
+                }
+            }
+        } while (!parser.IsEmpty);
+
+        return total.ToString();
     }
 }
