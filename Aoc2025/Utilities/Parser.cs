@@ -11,6 +11,8 @@ public ref struct Parser
         Offset = offset;
     }
 
+    public readonly int Pos => Offset;
+
     public readonly int RemainingLength => Math.Max(0, Bytes.Length - Offset);
 
     public readonly bool IsEmpty => Offset >= Bytes.Length;
