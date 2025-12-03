@@ -2,11 +2,21 @@
 
 public partial class Day03 : DayBase
 {
+    /*
+     * Measured performance:
+     * 
+     * | Method | Mean      | Error    | StdDev   |
+     * |------- |----------:|---------:|---------:|
+     * | Solve1 |  64.28 us | 0.268 us | 0.384 us |
+     * | Solve2 | 245.33 us | 0.548 us | 0.786 us |
+     */
+
     public override void ParseData()
     {
         // No common parsing logic
     }
 
+    [Benchmark]
     public override string Solve1()
     {
         var parser = new Parser(Contents);
@@ -38,6 +48,7 @@ public partial class Day03 : DayBase
 
     private const int RequiredDigits = 12;
 
+    [Benchmark]
     public override string Solve2()
     {
         var parser = new Parser(Contents);
