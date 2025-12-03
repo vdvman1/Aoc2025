@@ -7,8 +7,8 @@ public partial class Day03 : DayBase
      * 
      * | Method | Mean      | Error    | StdDev   |
      * |------- |----------:|---------:|---------:|
-     * | Solve1 |  64.28 us | 0.268 us | 0.384 us |
-     * | Solve2 | 245.33 us | 0.548 us | 0.786 us |
+     * | Solve1 |  41.79 us | 0.056 us | 0.080 us |
+     * | Solve2 | 211.80 us | 0.298 us | 0.446 us |
      */
 
     public override void ParseData()

@@ -18,7 +18,7 @@ public partial class Program
             BenchmarkRunner.Run(DayTypes[^1], ManualConfig.CreateMinimumViable()
                 .AddJob(Job
                     .MediumRun
-                    .WithToolchain(NativeAotToolchain.Net80)
+                    .WithToolchain(NativeAotToolchain.Net10_0)
                 )
             );
         }
@@ -30,7 +30,7 @@ public partial class Program
         BenchmarkRunner.Run(DayTypes, ManualConfig.CreateMinimumViable()
             .AddJob(Job
                 .MediumRun
-                .WithToolchain(NativeAotToolchain.Net80)
+                .WithToolchain(NativeAotToolchain.Net10_0)
             ).AddExporter(MarkdownExporter.GitHub)
         );
     }

@@ -7,8 +7,8 @@ public partial class Day02 : DayBase
      * 
      * | Method | Mean      | Error     | StdDev    |
      * |------- |----------:|----------:|----------:|
-     * | Solve1 |  6.839 ms | 0.0059 ms | 0.0083 ms |
-     * | Solve2 | 46.302 ms | 0.0786 ms | 0.1102 ms |
+     * | Solve1 |  6.793 ms | 0.0112 ms | 0.0164 ms |
+     * | Solve2 | 42.246 ms | 0.1483 ms | 0.2174 ms |
      */
 
     public override void ParseData()
