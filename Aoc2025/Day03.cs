@@ -36,8 +36,41 @@ public partial class Day03 : DayBase
         return total.ToString();
     }
 
+    private const int RequiredDigits = 12;
+
     public override string Solve2()
     {
-        throw new NotImplementedException();
+        var parser = new Parser(Contents);
+        long total = 0;
+
+        Span<sbyte> digits = stackalloc sbyte[RequiredDigits];
+
+        while (parser.ParseLine() is { IsEmpty: false} line)
+        {
+            digits.Fill(-1);
+            digits[0] = (sbyte)(line.ParseOne() - '0');
+
+            while (line.TryParseDigit(out int digit))
+            {
+                for (int i = Math.Max(0, RequiredDigits - line.RemainingLength - 1); i < RequiredDigits; i++)
+                {
+                    if (digit > digits[i])
+                    {
+                        digits[i] = (sbyte)digit;
+                        digits[(i + 1)..].Fill(-1);
+                        break;
+                    }
+                }
+            }
+
+            long value = digits[0];
+            for (int i = 1; i < RequiredDigits; i++)
+            {
+                value = 10*value + digits[i];
+            }
+            total += value;
+        }
+
+        return total.ToString();
     }
 }
