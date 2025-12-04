@@ -48,4 +48,6 @@ public record struct VectorI2d(int X, int Y)
         // RIGHT =  1,  0    1 * 2 =  2    2 + 0 =  2   ~ 2 = -3   abs(-3) = 3
         return Math.Abs(~((X << 1) + Y));
     }
+
+    public readonly bool IsScannedEarlierThan(VectorI2d other) => Y < other.Y || (Y == other.Y && X < other.X);
 }
