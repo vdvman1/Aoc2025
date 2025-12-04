@@ -10,6 +10,9 @@ public record struct VectorI2d(int X, int Y)
     public static VectorI2d operator +(VectorI2d a, VectorI2d b) => new(a.X + b.X, a.Y + b.Y);
     public static VectorI2d operator -(VectorI2d a, VectorI2d b) => new(a.X - b.X, a.Y - b.Y);
 
+    public static VectorI2d operator *(VectorI2d vec, int scale) => new(scale * vec.X, scale * vec.Y);
+    public static VectorI2d operator *(int scale, VectorI2d vec) => new(scale * vec.X, scale * vec.Y);
+
     public readonly VectorI2d Simplified()
     {
         var gcd = MathPlus.Gcd(X, Y);
