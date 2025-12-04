@@ -5,11 +5,11 @@ public partial class Day04 : DayBase
     /*
      * Measured performance:
      * 
-     * | Method    | Mean        | Error     | StdDev    |
-     * |---------- |------------:|----------:|----------:|
-     * | ParseData |    16.47 us |  0.263 us |  0.393 us |
-     * | Solve1    | 1,237.10 us |  7.598 us | 11.137 us |
-     * | Solve2    | 2,908.49 us | 24.649 us | 35.352 us |
+     * | Method    | Mean        | Error     | StdDev    | Median      |
+     * |---------- |------------:|----------:|----------:|------------:|
+     * | ParseData |    16.33 us |  0.287 us |  0.429 us |    16.09 us |
+     * | Solve1    |   184.19 us |  0.251 us |  0.368 us |   184.24 us |
+     * | Solve2    | 2,845.79 us | 11.582 us | 15.854 us | 2,847.83 us |
      */
 
     private readonly List<bool[]> Grid = [];
@@ -36,36 +36,221 @@ public partial class Day04 : DayBase
     {
         int reachable = 0;
 
-        for (int y = 0; y < Grid.Count; y++)
+        bool[] above;
+        var row = Grid[0];
+        var below = Grid[1];
+
+        var rowEnd = row.Length - 1;
+        var gridEnd = Grid.Count - 1;
+
+        if (row[0])
         {
-            var row = Grid[y];
-            for (int x = 0; x < row.Length; x++)
+            // 0,0 has only 3 neighbours, so guaranteed to be reachable
+            reachable++;
+        }
+
+        for (int x = 1; x < rowEnd; x++)
+        {
+            if (row[x])
             {
-                if (row[x] && IsReachable(x, y))
+                var count = 0;
+                if (row[x - 1])
                 {
+                    count++;
+                }
+
+                if (row[x + 1])
+                {
+                    count++;
+                }
+
+                if (below[x - 1])
+                {
+                    count++;
+                }
+
+                if (below[x])
+                {
+                    if (count >= 3) continue;
+                    count++;
+                }
+
+                if (below[x + 1] && count >= 3) continue;
+
+                reachable++;
+            }
+        }
+
+        if (row[rowEnd])
+        {
+            // ^1, 0 has only 3 neighbours, so guaranteed to be reachable
+            reachable++;
+        }
+
+        for (int y = 1; y < gridEnd; y++)
+        {
+            above = row;
+            row = below;
+            below = Grid[y + 1];
+
+            if (row[0])
+            {
+                var count = 0;
+                if (above[0])
+                {
+                    count++;
+                }
+
+                if (above[1])
+                {
+                    count++;
+                }
+
+                if (row[1])
+                {
+                    count++;
+                }
+
+                if (below[0])
+                {
+                    if (count >= 3) goto middleXs;
+                    count++;
+                }
+
+                if (below[1] && count >= 3) goto middleXs;
+
+                reachable++;
+            }
+
+        middleXs:
+            for (int x = 1; x < rowEnd; x++)
+            {
+                if (row[x])
+                {
+                    var count = 0;
+                    if (above[x - 1])
+                    {
+                        count++;
+                    }
+
+                    if (above[x])
+                    {
+                        count++;
+                    }
+
+                    if (above[x + 1])
+                    {
+                        count++;
+                    }
+
+                    if (row[x - 1])
+                    {
+                        if (count >= 3) continue;
+                        count++;
+                    }
+
+                    if (row[x + 1])
+                    {
+                        if (count >= 3) continue;
+                        count++;
+                    }
+
+                    if (below[x - 1])
+                    {
+                        if (count >= 3) continue;
+                        count++;
+                    }
+
+                    if (below[x])
+                    {
+                        if (count >= 3) continue;
+                        count++;
+                    }
+
+                    if (below[x + 1] && count >= 3) continue;
+
                     reachable++;
                 }
             }
+
+            if (row[rowEnd])
+            {
+                var count = 0;
+                if (above[rowEnd - 1])
+                {
+                    count++;
+                }
+
+                if (above[rowEnd])
+                {
+                    count++;
+                }
+
+                if (row[rowEnd - 1])
+                {
+                    count++;
+                }
+
+                if (below[rowEnd - 1])
+                {
+                    if (count >= 3) continue;
+                    count++;
+                }
+
+                if (below[rowEnd] && count >= 3) continue;
+
+                reachable++;
+            }
+        }
+
+        above = row;
+        row = below;
+
+        if (row[0])
+        {
+            // 0, ^1 has only 3 neighbours, so guaranteed to be reachable
+            reachable++;
+        }
+
+        for (int x = 1; x < rowEnd; x++)
+        {
+            if (row[x])
+            {
+                var count = 0;
+                if (above[x - 1])
+                {
+                    count++;
+                }
+
+                if (above[x])
+                {
+                    count++;
+                }
+
+                if (above[x + 1])
+                {
+                    count++;
+                }
+
+                if (row[x - 1])
+                {
+                    if (count >= 3) continue;
+                    count++;
+                }
+
+                if (row[x + 1] && count >= 3) continue;
+
+                reachable++;
+            }
+        }
+
+        if (row[rowEnd])
+        {
+            // ^1, ^1 has only 3 neighbours, so guaranteed to be reachable
+            reachable++;
         }
 
         return reachable.ToString();
-    }
-
-    private bool IsReachable(int x, int y)
-    {
-        int count = 0;
-        foreach (var (_, hasPaper) in Grid.Adjacent8(new(x, y)))
-        {
-            if (hasPaper)
-            {
-                count++;
-                if (count >= 4)
-                {
-                    return false;
-                }
-            }
-        }
-        return true;
     }
 
     [Benchmark]
