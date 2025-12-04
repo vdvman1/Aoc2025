@@ -2,8 +2,19 @@
 
 public partial class Day04 : DayBase
 {
+    /*
+     * Measured performance:
+     * 
+     * | Method    | Mean        | Error     | StdDev    |
+     * |---------- |------------:|----------:|----------:|
+     * | ParseData |    16.47 us |  0.263 us |  0.393 us |
+     * | Solve1    | 1,237.10 us |  7.598 us | 11.137 us |
+     * | Solve2    | 2,908.49 us | 24.649 us | 35.352 us |
+     */
+
     private readonly List<bool[]> Grid = [];
 
+    [Benchmark]
     public override void ParseData()
     {
         var parser = new Parser(Contents);
@@ -20,6 +31,7 @@ public partial class Day04 : DayBase
         }
     }
 
+    [Benchmark]
     public override string Solve1()
     {
         int reachable = 0;
@@ -56,6 +68,7 @@ public partial class Day04 : DayBase
         return true;
     }
 
+    [Benchmark]
     public override string Solve2()
     {
         // Copy grid to avoid mutating original
