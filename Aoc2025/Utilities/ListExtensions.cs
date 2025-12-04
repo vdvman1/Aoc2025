@@ -82,6 +82,62 @@ public static class ListExtensions
         }
     }
 
+    public static IEnumerable<KeyValuePair<VectorI2d, T>> Adjacent8<T>(this List<T[]> grid, VectorI2d center)
+    {
+        T[] row;
+
+        var index = center + VectorI2d.UP;
+        if (index.Y >= 0)
+        {
+            row = grid[index.Y];
+            yield return KeyValuePair.Create(index, row[index.X]);
+
+            index += VectorI2d.LEFT;
+            if (index.X >= 0)
+            {
+                yield return KeyValuePair.Create(index, row[index.X]);
+            }
+
+            index += VectorI2d.RIGHT * 2;
+            if (index.X < row.Length)
+            {
+                yield return KeyValuePair.Create(index, row[index.X]);
+            }
+        }
+
+        index = center + VectorI2d.DOWN;
+        if (index.Y < grid.Count)
+        {
+            row = grid[index.Y];
+            yield return KeyValuePair.Create(index, row[index.X]);
+
+            index += VectorI2d.LEFT;
+            if (index.X >= 0)
+            {
+                yield return KeyValuePair.Create(index, row[index.X]);
+            }
+
+            index += VectorI2d.RIGHT * 2;
+            if (index.X < row.Length)
+            {
+                yield return KeyValuePair.Create(index, row[index.X]);
+            }
+        }
+
+        row = grid[center.Y];
+        index = center + VectorI2d.LEFT;
+        if (index.X >= 0)
+        {
+            yield return KeyValuePair.Create(index, row[index.X]);
+        }
+
+        index = center + VectorI2d.RIGHT;
+        if (index.X < row.Length)
+        {
+            yield return KeyValuePair.Create(index, row[index.X]);
+        }
+    }
+
     public static bool MarkAt(this List<bool[]> grid, VectorI2d pos)
     {
         ref var marked = ref grid.RefAt(pos);
