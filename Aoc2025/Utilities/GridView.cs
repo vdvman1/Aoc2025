@@ -15,4 +15,6 @@ public readonly ref struct GridView<T> where T : IEquatable<T>
     }
 
     public readonly T this[Index x, Index y] => Data[y.GetOffset(Height) * (Width + 1) + x.GetOffset(Width)];
+
+    public readonly ReadOnlySpan<T> Row(int y) => Data.Slice(start: y * (Width + 1), length: Width);
 }
