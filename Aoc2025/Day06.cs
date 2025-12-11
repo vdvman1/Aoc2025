@@ -64,6 +64,49 @@ public partial class Day06 : DayBase
 
     public override string Solve2()
     {
-        throw new NotImplementedException();
+        var input = Contents;
+        var lineLength = input.IndexOf((byte)'\n');
+        var lineCount = input.Count((byte)'\n');
+        long total = 0;
+
+        List<int> values = [];
+        for (int i = lineLength - 1; i >= 0; i--)
+        {
+            int value = 0;
+            for (int j = 0; j < lineCount - 1; j++)
+            {
+                var digit = input[j * (lineLength + 1) + i] - '0';
+                if ((uint)digit <= 9u)
+                {
+                    value = 10 * value + digit;
+                }
+            }
+
+            values.Add(value);
+            var op = input[(lineCount - 1) * (lineLength + 1) + i];
+            switch (op)
+            {
+                case (byte)'*':
+                    long product = 1;
+                    foreach (var num in values)
+                    {
+                        product *= num;
+                    }
+                    total += product;
+                    values.Clear();
+                    i--;
+                    break;
+                case (byte)'+':
+                    foreach (var num in values)
+                    {
+                        total += num;
+                    }
+                    values.Clear();
+                    i--;
+                    break;
+            }
+        }
+
+        return total.ToString();
     }
 }
