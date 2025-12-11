@@ -25,6 +25,8 @@ public ref struct Parser
 
     public byte ParseOne() => IsEmpty ? (byte)0 : Bytes[Offset++];
 
+    public readonly byte Peek() => IsEmpty ? (byte)0 : Bytes[Offset];
+
     public int ParsePosInt()
     {
         int result = 0;
