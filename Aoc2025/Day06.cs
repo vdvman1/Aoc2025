@@ -64,18 +64,16 @@ public partial class Day06 : DayBase
 
     public override string Solve2()
     {
-        var input = Contents;
-        var lineLength = input.IndexOf((byte)'\n');
-        var lineCount = input.Count((byte)'\n');
+        var grid = new GridView<byte>(Contents, (byte)'\n');
         long total = 0;
 
         List<int> values = [];
-        for (int i = lineLength - 1; i >= 0; i--)
+        for (int i = grid.Width - 1; i >= 0; i--)
         {
             int value = 0;
-            for (int j = 0; j < lineCount - 1; j++)
+            for (int j = 0; j < grid.Height - 1; j++)
             {
-                var digit = input[j * (lineLength + 1) + i] - '0';
+                var digit = grid[i, j] - '0';
                 if ((uint)digit <= 9u)
                 {
                     value = 10 * value + digit;
@@ -83,7 +81,7 @@ public partial class Day06 : DayBase
             }
 
             values.Add(value);
-            var op = input[(lineCount - 1) * (lineLength + 1) + i];
+            var op = grid[i, ^1];
             switch (op)
             {
                 case (byte)'*':
